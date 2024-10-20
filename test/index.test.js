@@ -55,7 +55,7 @@ describe('index', () => {
           plugin,
           {
             libraryName: 'plat/antd',
-            customName: name => `antd/lib/${name}`,
+            customName: name => `antd/lib/${name.toLowerCase()}`,
           },
         ];
       } else if (caseName === 'custom-name-source-file') {
@@ -133,6 +133,7 @@ describe('index', () => {
             plugins: [
               [plugin, { libraryName: 'antd' }, 'antd'],
               [plugin, { libraryName: 'antd-mobile' }, 'antd-mobile'],
+              [plugin, { libraryName: 'mixed-inputs', alias: 'mixed'}, 'mixed-inputs']
             ],
           }).code;
         } else if (caseName === 'multiple-libraries-hilojs') {
@@ -145,11 +146,12 @@ describe('index', () => {
                 {
                   libraryName: 'hilojs',
                   customName(name) {
-                    switch (name) {
+                    const lowerName = name.toLowerCase()
+                    switch (lowerName) {
                       case 'class':
-                        return `hilojs/core/${name}`;
+                        return `hilojs/core/${lowerName.toLowerCase()}`;
                       default:
-                        return `hilojs/${name}`;
+                        return `hilojs/${lowerName.toLowerCase()}`;
                     }
                   },
                 },
